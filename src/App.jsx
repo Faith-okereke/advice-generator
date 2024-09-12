@@ -6,19 +6,18 @@ import { Loading } from "./Loading";
 
 function App() {
   const [advice, setAdvice] = useState([]);
-  const [error, setError] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
   const url = "https://api.adviceslip.com/advice";
   const fetchData = async () => {
     try {
       setLoading(true);
       const response = await fetch(url);
       if (!response.ok) {
-        throw new Error("Failed to fetch Advice");
+        throw new Error("Failed to Fetch");
       }
       const json = await response.json();
       setAdvice(json.slip);
-      setLoading(false);
     } catch (error) {
       setError(error.message);
     } finally {
@@ -27,10 +26,13 @@ function App() {
   };
   useEffect(() => {
     fetchData();
-    console.log(advice);
+    setTimeout(() => {
+      setLoading(false);
+    }, 1000);
   }, []);
   const generateAdvice = () => {
     fetchData();
+    console.log(advice.advice);
   };
   return (
     <div>
@@ -56,7 +58,7 @@ function App() {
         <a href="https://www.frontendmentor.io?ref=challenge" target="_blank">
           Frontend Mentor
         </a>
-        . Coded by <a href="#">Faith Okereke</a>.
+        . Coded by <a href="https://www.frontendmentor.io/profile/Faith-okereke" target="_blank">Faith Okereke</a>.
       </div>
     </div>
   );
